@@ -75,7 +75,8 @@ void empiler(int tableau[LIGNES][COLONNES],int colonne, int couleur)
   }
 }
 
-int combien_dans_direction(int tableau[LIGNES][COLONNES], int couleur, int colonne, int delta_i,int delta_j)
+int combien_dans_direction(int tableau[LIGNES][COLONNES], int couleur,
+ int colonne, int delta_i,int delta_j)
 {
   int compteur=0;
   if (colonne<0 || colonne>COLONNES){
@@ -94,4 +95,42 @@ int combien_dans_direction(int tableau[LIGNES][COLONNES], int couleur, int colon
 
   }
   return compteur;
+}
+
+int test_lignes(int tableau[LIGNES][COLONNES], int couleur,int colonne)
+{
+  
+  if ((combien_dans_direction(tableau, couleur, colonne, 0, 1) + combien_dans_direction(tableau, couleur, colonne, 0, -1))>=4){
+    return couleur;
+  }
+  
+  return 0;
+}
+
+int test_colonnes(int tableau[LIGNES][COLONNES], int couleur,int colonne)
+{
+  if ((combien_dans_direction(tableau, couleur, colonne, 1, 0) + combien_dans_direction(tableau, couleur, colonne, -1, 0))>=4){
+    return couleur;
+  }
+  
+  return 0;
+}
+
+int test_diagonales(int tableau[LIGNES][COLONNES], int couleur,int colonne)
+{
+  if ((combien_dans_direction(tableau, couleur, colonne, 1, 1) + combien_dans_direction(tableau, couleur, colonne, -1, -1))>=4){
+    return couleur;
+  } else if ((combien_dans_direction(tableau, couleur, colonne, -1, 1) + combien_dans_direction(tableau, couleur, colonne, 1, -1))>=4){
+    return couleur;
+  }
+
+  return 0;
+}
+
+int test_tout(int tableau[LIGNES][COLONNES], int couleur,int colonne)
+{
+  if (test_lignes(tableau, couleur, colonne)!=0 || test_colonnes(tableau, couleur, colonne)!=0 || test_diagonales(tableau, couleur, colonne)!=0){
+    return couleur;
+  }
+  return 0;
 }
