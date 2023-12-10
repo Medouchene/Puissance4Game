@@ -1,7 +1,5 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include "puissance4.h"
+
 
 int main()
 {
@@ -13,6 +11,7 @@ int main()
         {0, 0, 0, 0, 0, 0, 0},
         {0, 0, 0, 0, 0, 0, 0}
     };
+    //printf("fef %i\n ", combien_dans_direction(tableau, 1, 1, 0, -1));
 
     struct joueur joueurs[2];
     
@@ -28,7 +27,7 @@ int main()
     strcpy(joueurs[1].pseudo,b);
     joueurs[1].couleur = ROND;
     
-    bool STOP = true;
+    int stop = 0;
     int couleur;
     int compteur=0;
     
@@ -48,19 +47,21 @@ int main()
             
             empiler(tableau, p, joueurs[i-1].couleur);
             compteur++;
-            if (test_tout(tableau, couleur, p)!=0){
-                printf("Le gagnat de cette partie est le joueur %i %s\n", couleur, joueurs[couleur].pseudo);
-                STOP=false;
+            if (test_tout(tableau, couleur, p)!=-1){
+                printf("Le gagnant de cette partie est le joueur %i %s\n", couleur, joueurs[couleur-1].pseudo);
+                stop=1;
                 break;
             } else if (compteur == (7*6)){
                 printf("La partie est finie ");
-                STOP=false;
+                stop=1;
                 break;
             }
+            
 
         }
         
-    } while(STOP);
-
+    }while(stop == 0);
+  
+    afficher_plateau(tableau);
     return 0;
 }
